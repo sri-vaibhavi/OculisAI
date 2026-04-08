@@ -47,42 +47,44 @@ Database: MySQL
 
 📦 Getting Started
 1. Prerequisites
-Python 3.10+
 
-MySQL Server
+    Python 3.10+
 
-Ollama (with llama3.2:3b model pulled)
+    MySQL Server
+
+    Ollama (with llama3.2:3b model pulled)
 
 2. Setup
-Clone the repository:
 
-  git clone https://github.com/your-username/OculisAI.git
-  cd OculisAI
+  Clone the repository:
 
-Install dependencies:
+    git clone https://github.com/your-username/OculisAI.git
+    cd OculisAI
 
-  pip install -r requirements.txt
+  Install dependencies:
 
-Database Configuration:
+    pip install -r requirements.txt
+
+  Database Configuration:
 
   Run the database_setup.sql script in your MySQL instance to create the necessary tables.
 
-Code snippet
+  .env structure
 
-DB_HOST=localhost
+    DB_HOST=localhost
 
-DB_USER=root
+    DB_USER=root
 
-DB_PASSWORD=your_password
+    DB_PASSWORD=your_password
 
-DB_NAME=oculisai
+    DB_NAME=oculisai
 
-FLASK_SECRET_KEY=your_secret_key
+    FLASK_SECRET_KEY=your_secret_key
 
-MAIL_USERNAME=your_email@gmail.com
+    MAIL_USERNAME=your_email@gmail.com
 
-MAIL_PASSWORD=your_app_password
+    MAIL_PASSWORD=your_app_password
 
 3. Run the App
-     
-  python app.py
+
+       python app.py
