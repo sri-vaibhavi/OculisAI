@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Us - OCULIS AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+    /* ===== BODY ===== */
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif; /* Updated font */
+        background: #f5f7f8;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+        background: #003366;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header img { height: 50px; }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif; /* Ensure nav also uses Poppins */
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    /* ===== MAIN CONTENT ===== */
+    .container {
+        flex: 1;
+        max-width: 1000px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #ccc;
+    }
+
+    h1, h3 {
+        color: #003366;
+        text-align: center;
+        font-family: 'Poppins', sans-serif; /* Headings use Poppins */
+    }
+
+    p {
+        color: #333;
+        line-height: 1.7;
+        margin-bottom: 18px;
+        text-align: justify;
+        font-size: 16px; /* Increased font size */
+    }
+
+    /* ===== SERVICES (VERTICAL CENTERED) ===== */
+    .services-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        margin-top: 30px;
+        align-items: center;
+    }
+
+    .service-card {
+        width: 70%;
+        background: #f0f6ff;
+        border-radius: 12px;
+        overflow: hidden;
+        text-align: center;
+        transition: box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .service-card:hover {
+        box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    /* ===== SERVICE IMAGE ===== */
+    .service-card img {
+        width: 90%;
+        max-width: 450px;
+        height: 200px;
+        object-fit: cover;
+        margin: 20px auto 10px;
+        border-radius: 10px;
+        border: 3px solid #003366;
+        display: block;
+    }
+
+    .service-title {
+        padding: 15px;
+        font-weight: bold;
+        font-size: 18px;
+        color: #003366;
+        background: white;
+        font-family: 'Poppins', sans-serif; /* Service title font */
+    }
+
+    /* ===== DESCRIPTION ===== */
+    .service-desc {
+        padding: 20px;
+        background: #003366;
+        color: white;
+        line-height: 1.7;
+        display: none;
+        text-align: justify;
+        border-top: 3px solid #003366;
+        font-family:  "Lora", serif; /* Service description font */
+        font-size: 16px;
+    }
+
+    .service-card:hover .service-desc,
+    .service-card:active .service-desc {
+        display: block;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+        background: #003366;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    footer a {
+        color: white;
+        margin: 0 8px;
+    }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <img src="static/logo.png" alt="OCULIS AI Logo">
+    <nav>
+         <a href="Home.html">Home</a>
+        <a href="Login.html">Login</a>
+        <a href="patient.html">Patient</a>
+        <a href="chatbot.html">Chatbot</a>
+        <a href="#">About</a>
+        <a href="feedback.html">Feedback</a>
+    </nav>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+    <h1>About OCULIS AI</h1>
+
+    <p>
+        OCULIS AI is an advanced medical web application designed to support healthcare professionals
+        in the early detection and monitoring of retinal diseases. Using state-of-the-art artificial
+        intelligence, our platform analyzes high-resolution retinal fundus images with exceptional
+        accuracy and reliability.
+    </p>
+
+    <p>
+        The system is capable of identifying early signs of diabetic retinopathy, glaucoma,
+        age-related macular degeneration, and several other vision-threatening conditions.
+        These insights allow clinicians to make faster, more informed decisions that lead
+        to improved patient outcomes.
+    </p>
+
+    <p>
+        Our mission is to harness AI technology to prevent avoidable blindness by making
+        retinal screening more accessible, accurate, and efficient for everyone.
+    </p>
+
+    <h3>Our Services</h3>
+
+    <div class="services-wrapper">
+
+        <!-- SERVICE 1 -->
+        <div class="service-card">
+            <img src="static/service 1.png" alt="">
+            <div class="service-title">AI-powered retinal fundus image analysis</div>
+            <div class="service-desc">
+                This service uses advanced artificial intelligence to analyze retinal fundus images
+                with high precision. It detects diabetic retinopathy, glaucoma, cataract, and other
+                retinal disorders at an early stage. The system highlights affected regions for
+                improved clinical interpretation. It significantly reduces manual screening time.
+                AI-driven analysis ensures consistent and reliable results. This service supports
+                ophthalmologists in confident diagnosis and treatment planning. It is ideal for
+                hospitals, clinics, and screening programs.
+            </div>
+        </div>
+
+        <!-- SERVICE 2 -->
+        <div class="service-card">
+            <img src="static/service 2.png" alt="">
+            <div class="service-title">Early detection of diabetic retinopathy</div>
+            <div class="service-desc">
+                This service focuses on identifying early retinal changes caused by diabetes.
+                It detects microaneurysms, hemorrhages, and vascular abnormalities before symptoms appear.
+                Early diagnosis allows timely medical intervention and prevents vision loss.
+                The system supports routine diabetic screening programs. AI ensures uniform evaluation
+                across patients. This service plays a key role in proactive eye care and long-term
+                vision preservation.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2025 OCULIS AI | 📞 Contact: 044 - 12345678 <br>
+    🌐 Follow us:
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+</footer>
+
+</body>
+</html>

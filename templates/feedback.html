@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback - OCULIS AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            background: #003366;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header img { height: 50px; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover { text-decoration: underline; }
+
+        /* MAIN CONTAINER */
+        .container {
+            flex: 1;
+            max-width: 650px;
+            margin: 50px auto;
+            background: white;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #003366;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        textarea { resize: none; }
+
+        button {
+            width: 100%;
+            background: #003366;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #002244;
+        }
+
+        /* RADIO OPTIONS */
+        .comment-type {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+
+        .comment-type label {
+            font-weight: bold;
+            color: #003366;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* POPUP */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 30px 45px;
+            border-radius: 14px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #003366;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png">
+    <nav>
+         <a href="Home.html">Home</a>
+        <a href="Login.html">Login</a>
+        <a href="patient.html">Patient</a>
+        <a href="chatbot.html">Chatbot</a>
+        <a href="about.html">About</a>
+        <a href="#">Feedback</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Feedback</h1>
+    <p>We value your feedback. Please select one option and share your thoughts.</p>
+
+    <!-- STRUCTURE NOT CHANGED -->
+    <form onsubmit="handleFeedback(); return false;">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email Id" required>
+        <input type="text" placeholder="Location" required>
+        <input type="tel" placeholder="Mobile Number" required>
+
+        <div class="comment-type">
+            <label><input type="radio" name="commentType" value="Compliment" required> Compliment</label>
+            <label><input type="radio" name="commentType" value="Suggestion"> Suggestion</label>
+            <label><input type="radio" name="commentType" value="Complaint"> Complaint</label>
+            <label><input type="radio" name="commentType" value="Queries"> Queries</label>
+        </div>
+
+        <textarea rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <button type="submit">Submit Feedback</button>
+    </form>
+</div>
+
+<footer>
+    © 2025 OCULIS AI | 📞 044 - 12345678
+</footer>
+
+<script>
+function showPopup(message){
+    const overlay = document.createElement("div");
+    overlay.className = "popup-overlay";
+
+    const box = document.createElement("div");
+    box.className = "popup-box";
+    box.innerText = message;
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+        overlay.remove();
+    }, 3000);
+}
+
+function handleFeedback(){
+    const type = document.querySelector('input[name="commentType"]:checked').value;
+
+    if(type === "Compliment"){
+        showPopup("Thank you for your compliment!");
+    }
+    else if(type === "Complaint"){
+        showPopup("Thank you for your time. We will see to that complaint.");
+    }
+    else if(type === "Suggestion"){
+        showPopup("Thank you for your suggestion. We will work on it.");
+    }
+    else if(type === "Queries"){
+        showPopup("Thank you for your query. Our team will contact you soon.");
+    }
+}
+</script>
+
+</body>
+</html>

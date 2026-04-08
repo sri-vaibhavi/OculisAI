@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - OCULIS AI</title>
+    <link rel="stylesheet" href="static/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f5f7f8;
+        }
+
+        header {
+            background: #4CB8A4;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img { height: 50px; }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: flex; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 0 15px #000;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CB8A4;
+        }
+
+        .modal-content input {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .modal-content button {
+            width: 96%;
+            padding: 12px;
+            background: #4CB8A4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        .modal-content button:hover {
+            background: #3a8e7e;
+        }
+
+        .otp-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .otp-group input {
+            margin-bottom: 0;
+            flex: 2;
+        }
+
+        .otp-group button {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        footer {
+            margin-top: auto;
+            background: #4CB8A4;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a { color: white; margin-left: 10px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="OCULIS AI Logo">
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login_page">Login</a>
+        <a href="/chatbot">Chatbot</a>
+        <a href="/about">About</a>
+    </nav>
+</header>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>Sign In</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="submitLogin()">Login</button>
+        <p style="text-align:center;">
+            Don't have an account? <a href="javascript:void(0)" onclick="openSignup()">Sign Up</a>
+        </p>
+    </div>
+</div>
+
+<div id="signupModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h2>Create Account</h2>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="email" id="signupEmail" placeholder="Email">
+        <input type="text" id="PhoneNumber" placeholder="Phone Number">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        
+        <button onclick="generateOTP()" id="otpBtn">Generate OTP</button>
+
+        <div class="otp-group">
+            <input type="text" id="otpInput" placeholder="Enter 4-digit OTP">
+            <button onclick="verifyOTP()" style="background: #2c3e50;">Verify</button>
+        </div>
+
+        <p style="text-align:center; font-size: 14px; color: #666;">
+            Already have an account? <a href="javascript:void(0)" onclick="openLogin()">Sign In</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    // --- UI TOGGLES ---
+    function openSignup() {
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('signupModal').style.display = 'flex';
+    }
+
+    function openLogin() {
+        document.getElementById('signupModal').style.display = 'none';
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    // --- LOGIN LOGIC ---
+    function submitLogin() {
+        let email = document.getElementById("loginEmail").value;
+        let password = document.getElementById("loginPassword").value;
+
+        if(!email || !password) { alert("Please enter credentials"); return; }
+
+        fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("Login Success!");
+                // Uses redirect_url from server (admin -> /chatbot, user -> /patient)
+                window.location.href = data.redirect_url;
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(err => console.error("Login Error:", err));
+    }
+
+    // --- SIGNUP STEP 1: OTP GENERATION ---
+    function generateOTP() {
+        let full_name = document.getElementById("fullName").value;
+        let email = document.getElementById("signupEmail").value;
+        let phone = document.getElementById("PhoneNumber").value;
+        let password = document.getElementById("signupPassword").value;
+        let cpass = document.getElementById("confirmPassword").value;
+
+        if(!full_name || !email || !password) { alert("Please fill all fields"); return; }
+        if (password !== cpass) { alert("Passwords do not match"); return; }
+
+        fetch("/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ full_name, email, phone, password })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "otp_sent") {
+                alert("OTP has been sent to " + email);
+                document.getElementById('otpBtn').innerText = "Resend OTP";
+            } else {
+                alert("Error: " + data.message);
+            }
+        });
+    }
+
+    // --- SIGNUP STEP 2: VERIFICATION & REDIRECT TO SIGN IN ---
+    function verifyOTP() {
+        let email = document.getElementById("signupEmail").value;
+        let otp = document.getElementById("otpInput").value;
+
+        if(!otp) { alert("Please enter the OTP"); return; }
+
+        fetch("/verify_otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, otp })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("Account created successfully! Now please Sign In.");
+                // Switch to login modal instead of redirecting to form
+                openLogin();
+                // Pre-fill the login email for convenience
+                document.getElementById('loginEmail').value = email;
+            } else {
+                alert("Invalid OTP. Please try again.");
+            }
+        })
+        .catch(err => console.error("Verification Error:", err));
+    }
+</script>
+
+<footer>
+    © 2025 OCULIS AI | 📞 Contact: 044 - 12345678<br>
+    🌐 Follow us:
+    <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+</footer>
+
+</body>
+</html>

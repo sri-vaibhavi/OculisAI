@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - OCULIS AI</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f8;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER (Style from Code 1) ===== */
+        header {
+            background: #003366; 
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img { height: 50px; }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover { text-decoration: underline; }
+
+        /* ===== CHATBOT AREA ===== */
+        .chat-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .chat-container {
+            width: 600px;
+            max-width: 95%;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chat-header {
+            text-align: center;
+            color: #003366;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .robot-img {
+            width: 120px; /* Slightly adjusted for better fit */
+            margin-bottom: 15px;
+        }
+
+        /* UPLOAD SECTION (Feature from Code 2, Styled for Code 1) */
+        .upload-section {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: #f0f4f8;
+            border-radius: 8px;
+            align-items: center;
+        }
+
+        .upload-section input { 
+            flex: 1; 
+            font-size: 13px; 
+        }
+
+        .upload-btn {
+            background: #28a745; /* Green for action */
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .upload-btn:hover { background: #218838; }
+
+        .chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            overflow-y: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        .user-msg {
+            text-align: right;
+            color: #003366;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .bot-msg {
+            text-align: left;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline-color: #003366;
+        }
+
+        .chat-input button {
+            background: #003366;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .chat-input button:hover { background: #002244; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 8px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="static/logo.png" alt="OCULIS AI Logo">
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login_page">Login</a>
+        <a href="/patient">Patient Form</a>
+        <a href="/chatbot">Chatbot</a>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+    </nav>
+</header>
+
+<div class="chat-wrapper">
+    <div class="chat-container">
+        <div class="chat-header">OCULIS AI Assistant</div>
+        <img src="static/robot.png" class="robot-img" alt="OCULIS AI Robot">
+        
+        <div class="upload-section">
+            <input type="file" id="pdfFile" accept=".pdf">
+            <button class="upload-btn" onclick="uploadPDF()">Upload Report</button>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="bot-msg">Hello 👋 I’m OCULIS AI. How can I help you today?</div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask about your eye health...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2025 OCULIS AI | 📞 Contact: 044 - 12345678 <br>
+    🌐 Follow us:
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+</footer>
+
+<script>
+    // Logic: PDF Upload
+    async function uploadPDF() {
+        let fileInput = document.getElementById("pdfFile");
+        let chatBox = document.getElementById("chatBox");
+
+        if (fileInput.files.length === 0) return alert("Please select a PDF report first.");
+
+        let formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        chatBox.innerHTML += `<div class="bot-msg"><i>System: Uploading and analyzing report...</i></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            chatBox.innerHTML += `<div class="bot-msg"><b>System:</b> ${data.message}</div>`;
+        } catch (error) {
+            chatBox.innerHTML += `<div class="bot-msg" style="color:red;"><b>System:</b> Error uploading file.</div>`;
+        }
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Logic: Sending Messages to AI
+    async function sendMessage() {
+        let input = document.getElementById("userInput");
+        let chatBox = document.getElementById("chatBox");
+
+        if (input.value.trim() === "") return;
+
+        let userText = input.value;
+        chatBox.innerHTML += `<div class="user-msg"><b>You:</b> ${userText}</div>`;
+        input.value = "";
+
+        let loadingId = "loading-" + Date.now();
+        chatBox.innerHTML += `<div class="bot-msg" id="${loadingId}"><i>OCULIS AI is thinking...</i></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userText })
+            });
+            const data = await response.json();
+            document.getElementById(loadingId).innerHTML = `<b>Bot:</b> ${data.response}`;
+        } catch (error) {
+            document.getElementById(loadingId).innerText = "Error: Could not connect to AI.";
+        }
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Allow "Enter" key to send message
+    document.getElementById("userInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Form - OCULIS AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        html, body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #003366;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area img { height: 55px; }
+
+        header h1 { margin: 0; line-height: 1.2; }
+        header span { font-size: 14px; font-weight: normal; }
+
+        nav a {
+            color: white;
+            margin: 0 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover { text-decoration: underline; }
+
+        /* ===== PATIENT FORM ===== */
+        .container {
+            width: 800px;
+            max-width: 90%;
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-left, .form-right {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .form-center {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #003366;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            margin-top: auto;
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* ===== POPUP STYLING ===== */
+        #successPopup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 2000;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            min-width: 350px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-top: 5px solid #003366;
+        }
+
+        #successPopup.active { transform: translate(-50%, -50%) scale(1); }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        
+        .confirm-btn { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .wrong-btn { background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .final-btn { background: #003366; color: white; border: none; padding: 10px 20px; width: 100%; border-radius: 5px; margin-top: 10px; cursor: pointer; }
+
+        select { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #003366;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="logo.png" alt="OCULIS AI Logo">
+        <div>
+            <h1>OCULIS AI</h1>
+            <span>Temple of the EYE<br>(A Unit of Medical Research Foundation)</span>
+        </div>
+    </div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login_page">Login</a>
+        <a href="/patient">Patient</a>
+        <a href="/chatbot">Chatbot</a>
+        <a href="/about-us">About</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Patient Form</h2>
+    <form id="patientForm" enctype="multipart/form-data">
+        <div class="form-left">
+            <label>Patient ID:</label>
+            <input type="text" name="patient_id" placeholder="Ex: P101" required>
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Full Name" required>
+            <label>Email:</label>
+            <input type="email" name="email" placeholder="email@example.com" required>
+            <label>Age:</label>
+            <input type="number" name="age" placeholder="Age" required>
+        </div>
+        <div class="form-right">
+            <label>Weight (kg):</label>
+            <input type="text" name="weight" placeholder="Ex: 70" required>
+            <label>Gender:</label>
+            <input type="text" name="gender" placeholder="Male/Female/Other" required>
+            <label>Phone Number:</label>
+            <input type="text" name="phone" placeholder="Contact Number" required>
+            <label>Doctor Name:</label>
+            <input type="text" name="doctor_name" placeholder="Assigned Doctor" required>
+        </div>
+        <div class="form-center">
+            <label>Fundus Image (Retina Scan):</label><br>
+            <input type="file" name="fundus_image" accept="image/*" required>
+        </div>
+        <button type="submit" id="submitBtn">Submit & Analyze</button>
+    </form>
+</div>
+
+<div id="successPopup"></div>
+
+<footer>
+    © 2026 OCULIS AI | 📞 Contact: 044 - 12345678
+</footer>
+
+<script>
+    let lastConfidence = "90.0"; // Store confidence globally during the session
+
+    function closePopup() {
+        document.getElementById('successPopup').classList.remove('active');
+        document.getElementById('submitBtn').disabled = false;
+    }
+
+    document.getElementById('patientForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const popup = document.getElementById('successPopup');
+        const formData = new FormData(this);
+
+        btn.disabled = true;
+        popup.innerHTML = "<div class='loader'></div><h4>⏳ AI Analysis in progress...</h4>";
+        popup.classList.add('active');
+
+        try {
+            // STEP 1: Get AI Prediction (Vision Model)
+            const res = await fetch('/predict_only', { method: 'POST', body: formData });
+            const data = await res.json();
+
+            if (data.status === "success") {
+                lastConfidence = data.confidence; // Store the score (e.g., "94.5%")
+                
+                // Display Prediction and choices
+                popup.innerHTML = `
+                    <h3 style="color:#003366">Prediction Result</h3>
+                    <p>AI suggests: <b style="color: #d9534f;">${data.dr_level}</b><br>
+                    <small>System Confidence: ${data.confidence}</small></p>
+                    <hr style="border:0; border-top:1px solid #eee;">
+                    
+                    <div id="decision-box">
+                        <p>Does this match your clinical assessment?</p>
+                        <div class="btn-group">
+                            <button class="confirm-btn" onclick="finalize('${data.dr_level}', '${data.temp_filename}')">Confirm & Report</button>
+                            <button class="wrong-btn" onclick="showCorrection()">Modify Level</button>
+                        </div>
+                    </div>
+
+                    <div id="correction-box" style="display:none; margin-top:15px;">
+                        <label>Select Correct Severity:</label>
+                        <select id="manualLevel">
+                            <option value="No Diabetic Retinopathy">No Diabetic Retinopathy</option>
+                            <option value="Mild Retinopathy">Mild Retinopathy</option>
+                            <option value="Moderate Retinopathy">Moderate Retinopathy</option>
+                            <option value="Severe Retinopathy">Severe Retinopathy</option>
+                            <option value="Proliferative Retinopathy">Proliferative Retinopathy</option>
+                        </select>
+                        <button class="final-btn" onclick="finalize(document.getElementById('manualLevel').value, '${data.temp_filename}')">Proceed with Selected</button>
+                    </div>
+                `;
+            }
+        } catch (err) {
+            popup.innerHTML = "❌ Error: " + err.message;
+            setTimeout(closePopup, 3000);
+        }
+    });
+
+    function showCorrection() {
+        document.getElementById('decision-box').style.display = 'none';
+        document.getElementById('correction-box').style.display = 'block';
+    }
+
+    async function finalize(severity, tempFile) {
+        const popup = document.getElementById('successPopup');
+        const originalForm = document.getElementById('patientForm');
+        const finalData = new FormData(originalForm);
+        
+        // Show loading state for the LLM Agent
+        popup.innerHTML = `
+            <div class='loader'></div>
+            <h4 style="color:#003366">📝 Generating Medical Report...</h4>
+            <p style="font-size:13px; color:#666;">Llama 3.2 is synthesizing clinical notes and preparing the PDF. Please wait.</p>
+        `;
+
+        // Critical: Send verified severity and confidence back to bypass CNN re-run
+        finalData.append('verified_severity', severity);
+        finalData.append('temp_filename', tempFile);
+        finalData.append('confidence', lastConfidence); 
+
+        try {
+            const res = await fetch('/add_patient', { method: 'POST', body: finalData });
+            const result = await res.json();
+
+            if (result.status === "success") {
+                popup.innerHTML = `
+                    <div style="font-size: 50px; color:#28a745;">✅</div>
+                    <h3 style="margin-top:0;">Analysis Complete</h3>
+                    <p>Report and Email have been processed successfully.</p>
+                    <a href="${result.pdf_url}" target="_blank" style="display:block; background:#003366; color:white; padding:12px; margin:15px 0; text-decoration:none; border-radius:5px; font-weight:bold;">
+                        <i class="fas fa-file-pdf"></i> View & Download Report
+                    </a>
+                    <button onclick="location.reload()" style="background:none; color:#003366; border:none; cursor:pointer; text-decoration:underline; font-weight:bold;">Start New Screening</button>
+                `;
+            } else {
+                throw new Error(result.message);
+            }
+        } catch (err) {
+            popup.innerHTML = `<h3>❌ Error</h3><p>${err.message}</p>`;
+            setTimeout(closePopup, 5000);
+        }
+    }
+</script>
+
+</body>
+</html>

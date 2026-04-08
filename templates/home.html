@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OCULIS AI</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+<style>
+body{
+    margin:0;
+    font-family:"Poppins", serif;
+    background-image: url('/static/background_image.png');
+}
+
+/* ===== HEADER ===== */
+header{
+    background:#003366; /* Updated Color */
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-area img{ height:55px; }
+
+header h1{ margin:0; }
+
+header span{ font-size:14px; }
+
+nav a{
+    color:white;
+    margin:0 10px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+nav a:hover{ text-decoration:underline; }
+
+/* ===== HERO ===== */
+.hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:70px;
+    background:white;
+}
+
+.hero-text{ width:55%; }
+.hero-img{ width:40%; }
+.hero-img img{ width:100%; border-radius:10px; cursor:pointer; }
+
+/* ===== STATS ===== */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin:40px;
+}
+
+.stat{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat:hover{
+    transform:translateY(-6px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.stat h2{
+    color:#003366; /* Updated Color */
+    font-size:34px;
+    margin:0;
+}
+
+/* ===== ABOUT / WELCOME ===== */
+.section{
+    background:white;
+    margin:40px;
+    padding:40px;
+    border-radius:10px;
+}
+
+.about{
+    display:flex;
+    gap:30px;
+}
+
+.about img{
+    width:40%;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    background:#003366; /* Updated Color */
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+footer a{
+    color:white;
+    margin:0 8px;
+}
+
+/* ===== POPUP ===== */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    width:80%;
+    max-width:600px;
+    animation:zoom 0.4s ease;
+    position:relative;
+    text-align:center;
+}
+
+@keyframes zoom{
+    from{transform:scale(0.6); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+.close{
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.btext{
+    padding-top: 40px; 
+    font-size: 16px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo-area">
+<img src="static/logo.png" style="margin-right: 20px;">
+<div>
+<h1>OCULIS AI</h1>
+</div>
+</div>
+
+<nav>
+    <a href="#">Home</a>
+ <a href="/login_page">Login</a>
+ <a href="/about-us">About</a>
+ <a href="/feedback">Feedback</a>
+</nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+<div class="hero-text">
+<h2 style="color:#003366;">WELCOME TO OCULIS AI</h2>
+
+<p><b>The largest super speciality Eye Care Hospital in India</b></p>
+
+<p>
+OCULIS AI stands at the forefront of advanced ophthalmic care, combining decades of
+medical expertise with modern technology to deliver world-class eye treatment.
+</p>
+
+<p>
+With a strong focus on innovation, patient safety, and clinical excellence, we provide
+comprehensive eye care services ranging from early diagnosis to advanced surgical procedures.
+</p>
+
+<p>OCULIS AI features an intuitive and user-friendly interface, enabling practitioners to upload and review retinal images in just seconds. Automated analysis reports, visual indicators, and detailed evaluation summaries help reduce diagnostic errors and ensure consistent clinical assessments.</p>
+
+<p>
+Our mission is to preserve and enhance vision through compassionate care, precision-driven
+treatments, and continuous research-based improvement.
+</p>
+</div>
+
+<div class="hero-img">
+<img src="static/hospital.png"
+onclick="openPopup('OCULIS AI – Advanced Eye Care Hospital')">
+</div>
+</div>
+
+<!-- ===== STATS ===== -->
+<div class="stats">
+<div class="stat" onclick="openPopup('147 expert eye specialists')">
+<h2 class="count" data-target="147">0</h2>
+<p>Doctors</p>
+</div>
+
+<div class="stat" onclick="openPopup('280+ surgeries every day')">
+<h2 class="count" data-target="280">0</h2>
+<p>Screenings per day</p>
+</div>
+
+<div class="stat" onclick="openPopup('3,500+ patients served daily')">
+<h2 class="count" data-target="3500">0</h2>
+<p>Patients a day</p>
+</div>
+
+<div class="stat" onclick="openPopup('45+ years of trusted care')">
+<h2 class="count" data-target="45">0</h2>
+<p>Years of Care</p>
+</div>
+</div>
+
+<!-- ===== WELCOME SECTION ===== -->
+<div class="section">
+<div class="about">
+
+<img src="static/doctor_patient.png"
+onclick="openPopup('Doctor examining patient using fundus camera')" style="margin-right: 20px;">
+
+<div class="btext">
+    <h2 style="color:#003366;">OCULIS AI</h2>
+
+    <p>
+    A center of excellence dedicated to delivering
+    ethical, patient-centric, and high-quality eye care services to individuals of all ages.
+    </p>
+
+    <p>
+    We believe that every patient deserves personalized attention, accurate diagnosis,
+    and the most effective treatment options available in modern ophthalmology.
+    </p>
+
+    <p>
+    At <b>OCULIS AI</b>, our Quality Policy stands as the cornerstone of our mission,
+    driving us to consistently enhance clinical outcomes, ensure patient safety,
+    and uphold the highest standards of medical integrity.
+    </p>
+
+    <p>Our platform seamlessly integrates into existing clinical workflows, making it suitable for hospitals, eye clinics, screening programs, and tele-ophthalmology networks. OCULIS AI enhances efficiency by minimizing manual workload and providing a reliable second opinion.</p>
+
+    <p>
+    Through continuous research, skilled specialists, and advanced diagnostic tools,
+    we strive to build a future where preventable vision loss becomes a rarity.
+    </p>
+
+</div>
+</div>
+</div>
+
+<footer>
+© 2025 OCULIS AI | 📞 Contact: 044 - 12345678 <br>
+🌐 Follow us:
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+</footer>
+
+<!-- ===== POPUP ===== -->
+<div class="modal" id="popup">
+<div class="modal-content">
+<span class="close" onclick="closePopup()">×</span>
+<p id="popupText"></p>
+</div>
+</div>
+
+<script>
+const counters=document.querySelectorAll('.count');
+counters.forEach(c=>{
+let s=0,t=+c.dataset.target,i=Math.ceil(t/100);
+(function run(){
+    s+=i;
+    if(s<t){
+        c.innerText=s;
+        setTimeout(run,30);
+    }else{
+        c.innerText=t+"+";
+    }
+})();
+});
+
+function openPopup(text){
+document.getElementById("popupText").innerText=text;
+document.getElementById("popup").style.display="flex";
+}
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+</script>
+
+</body>
+</html>
